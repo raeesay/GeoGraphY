@@ -26,3 +26,16 @@ def dbp_extract_o(s,p):
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
     return(results)
+
+def dbp_json_to_list(json):
+    """
+    dbp_json_to_list
+    - Function to retrieve the values from the dbpedia json
+    - Only tested on a single 'column' being returned
+    - The json must be provided
+    - Returns a list
+    """
+    output = list()
+    for object in json['results']['bindings']:
+        output.append(object['object']['value'])
+    return(output)
