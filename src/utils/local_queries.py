@@ -1,4 +1,5 @@
 from rdflib import Graph
+import random
 # TODO: Exception handling
 
 # What is the capital of {country}?
@@ -7,22 +8,26 @@ from rdflib import Graph
 
 def country_capital(rdf_countries, rdf_capitals):
 
+    # Generate a random offset
+    max_offset = 240  # We have 246 countries in the dataset
+    random_offset = random.randint(0, max_offset)
+
     # Query a random country
-    # TODO: Randomise the offset, this keeps returning "Senegal"
-    query_country = """
+    query_country = f"""
         PREFIX gn: <http://www.geonames.org/ontology#>
         PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
         PREFIX code: <http://telegraphis.net/data/countries/codeSchemes#>
 
         SELECT ?country ?name ?capital_uri
-        WHERE {
+        WHERE {{
             ?country a gn:Country ;
                     gn:name ?name ;
                     geographis:capital ?capital_uri .
-        }
-        OFFSET 200
+        }}
         LIMIT 1
+        OFFSET {random_offset}
     """
+
 
     country_name = None
     capital_uri = None
