@@ -39,3 +39,22 @@ def dbp_json_to_list(json):
     for object in json['results']['bindings']:
         output.append(object['object']['value'])
     return(output)
+
+def dbp_uri_to_text(string):
+    """
+    dbp_uri_to_text
+    - Function to retrieve the actual words from a dbpedia URI
+    - The string containing the URI must be provided
+    - Returns a string
+    """
+    return(string.rsplit('/', 1)[1].replace('_',' '))
+
+def dbp_list_uri_to_text(string_list):
+    """
+    dbp_list_uri_to_text
+    - Function to retrieve the actual words from a list of dbpedia URI
+    - The list containing strings with URIs must be provided
+    - Returns a list of strings
+    """
+    return([dbp_uri_to_text(string) for string in string_list])
+
