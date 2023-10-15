@@ -6,10 +6,10 @@ import random
 # -> We want to be able to query a country first for the question
 # Then get the answer by using the geographis:capital tag
 
-def country_capital(rdf_countries, rdf_capitals):
+def get_random_country(rdf_countries):
 
     # Generate a random offset
-    max_offset = 240  # We have 246 countries in the dataset
+    max_offset = 240  
     random_offset = random.randint(0, max_offset)
 
     # Query a random country
@@ -36,6 +36,9 @@ def country_capital(rdf_countries, rdf_capitals):
         country_name = row[1]
         capital_uri = row[2]
         
+    return country_name, capital_uri
+
+def get_country_capital(capital_uri, rdf_capitals):
 
     # Query for the capital's name using the correct relationship
     query_capital = f"""
@@ -53,4 +56,4 @@ def country_capital(rdf_countries, rdf_capitals):
     for capital_row in rdf_capitals.query(query_capital):
         capital_name = capital_row[0]
 
-    print(f"The capital of {country_name} is {capital_name}")
+    return capital_name
