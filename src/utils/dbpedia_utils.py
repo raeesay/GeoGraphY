@@ -31,17 +31,19 @@ def dbp_extract_o(s,p):
 
 # For handling the returned data from dbpedia -----------------------------------------------------
 
-def dbp_json_to_list(json):
+def dbp_json_to_list(json, uri=True):
     """
     dbp_json_to_list
     - Function to retrieve the values from the dbpedia json
     - Only tested on a single 'column' being returned
     - The json must be provided
+    - If uri=True, will only return items from the list that are uris
     - Returns a list
     """
     output = list()
     for object in json['results']['bindings']:
-        output.append(object['object']['value'])
+        if ((uri==True) & (object['object']['type']=='uri')):
+            output.append(object['object']['value'])
     return(output)
 
 def dbp_uri_to_text(string):
