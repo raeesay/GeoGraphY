@@ -1,4 +1,5 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
+import random
 
 # For sending requests to dbpedia ------------------------------------------------------------------
 
@@ -42,7 +43,7 @@ def dbp_json_to_list(json, uri=True):
     """
     output = list()
     for object in json['results']['bindings']:
-        if ((uri==True) & (object['object']['type']=='uri')):
+        if ((uri==True) & (object['object']['type']=='uri'))|(uri==False):
             output.append(object['object']['value'])
     return(output)
 
@@ -74,7 +75,7 @@ def dbp_countryCode(country_uri):
     - Returns a string with the dialling code
     """
     working = dbp_extract_o(s=country_uri, p="dbo:countryCode")
-    return(dbp_json_to_list(working)[0])
+    return(dbp_json_to_list(working, uri=False)[0])
 
 def dbp_leaderName(country_uri):
     """
@@ -87,4 +88,43 @@ def dbp_leaderName(country_uri):
     working = dbp_json_to_list(working)
     working = dbp_list_uri_to_text(working)
     return("/".join(working))
+
+def dbp_birthPlace(country_uri):
+    """
+    dbp_birthPlace
+    - Function to retrieve a random person born in the country for the country provided as input
+    - The input can either be the URI or also dbp:Country
+    - Returns a string with the name
+    """
+    working = dbp_extract_s(o=country_uri, p="dbo:birthPlace")
+    working = dbp_json_to_list(working)
+    working = random.choice(working)
+    working = dbp_uri_to_text(working)
+    return(working)
+
+def dbp_cityServed(country_uri):
+    """
+    dbp_cityServed
+    - Function to retrieve a random airport for the country provided as input
+    - The input can either be the URI or also dbp:Country
+    - Returns a string with the name
+    - SAME AS birthPlace
+    """
+    working = dbp_extract_s(o=country_uri, p="dbp:cityServed")
+    working = dbp_json_to_list(working)
+    working = random.choice(working)
+    working = dbp_uri_to_text(working)
+    return(working)
+
+def dbp_nationalAnthem(country_uri):
+    """
+    dbp_nationalAnthem
+    - Function to retrieve the national anthem for the country provided as input
+    - The input can either be the URI or also dbp:Country
+    - Returns a string with the national anthem, unnecessary quote marks also removed
+    """
+    working = dbp_extract_o(s=country_uri, p="dbp:nationalAnthem")
+    working = dbp_json_to_list(working, uri=False)
+    return(working[0].replace('"',""))
+
 
