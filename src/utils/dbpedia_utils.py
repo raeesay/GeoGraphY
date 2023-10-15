@@ -1,5 +1,6 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
 import random
+import re
 
 # For sending requests to dbpedia ------------------------------------------------------------------
 
@@ -126,5 +127,18 @@ def dbp_nationalAnthem(country_uri):
     working = dbp_extract_o(s=country_uri, p="dbp:nationalAnthem")
     working = dbp_json_to_list(working, uri=False)
     return(working[0].replace('"',""))
+
+def dbp_mouthLocation(country_uri):
+    """
+    dbp_mouthLocation
+    - Function to retrieve a river with the mouth in the country for the country provided as input
+    - The input can either be the URI or also dbp:Country
+    - Returns a string with a river name, additional info in brackets removed
+    """
+    working = dbp_extract_s(o=country_uri, p="dbp:mouthLocation")
+    working = dbp_json_to_list(working)
+    working = random.choice(working)
+    working = dbp_uri_to_text(working)
+    return(re.sub(" \(.*?\)","",working))
 
 
