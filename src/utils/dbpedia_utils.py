@@ -15,17 +15,26 @@ def dbp_select_o(s,p):
     query = "SELECT ?object WHERE {" + s + " " + p + " ?object.}"
     return(query)
 
-def dbp_extract_o(s,p):
+def dbp_select_s(o,p):
     """
-    dbp_extract_o
+    - Function to form the select query
+    - Assumes that the subject is the target
+    - The object and predicate must be provided
+    - The object could be as it would be on dbpedia eg. dbr:Germany, or it can be the original URI
+    - Returns a string
+    """
+    query = "SELECT ?subject WHERE {?subject " + p + " " + o + ".}"
+    return(query)
+
+def dbp_extract(query):
+    """
+    dbp_extract
     - Function to retrieve the select query
-    - Assumes that the object is the target
-    - The subject and predicate must be provided
+    - The query must be provided
     - The subject could be as it would be on dbpedia eg. dbr:Germany, or it can be the original URI
     - Returns a dictionary
     """
     sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-    query = dbp_select_o(s=s, p=p)
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
@@ -75,7 +84,7 @@ def dbp_countryCode(country_uri):
     - The input can either be the URI or also dbp:Country
     - Returns a string with the dialling code
     """
-    working = dbp_extract_o(s=country_uri, p="dbo:countryCode")
+    working = dbp_extract(dbp_select_o(s=country_uri, p="dbo:countryCode"))
     return(dbp_json_to_list(working, uri=False)[0])
 
 def dbp_leaderName(country_uri):
@@ -85,7 +94,7 @@ def dbp_leaderName(country_uri):
     - The input can either be the URI or also dbp:Country
     - Returns a string with the leader names, with / between where there are multiple
     """
-    working = dbp_extract_o(s=country_uri, p="dbp:leaderName")
+    working = dbp_extract(dbp_select_o(s=country_uri, p="dbp:leaderName"))
     working = dbp_json_to_list(working)
     working = dbp_list_uri_to_text(working)
     return("/".join(working))
@@ -97,7 +106,7 @@ def dbp_birthPlace(country_uri):
     - The input can either be the URI or also dbp:Country
     - Returns a string with the name
     """
-    working = dbp_extract_s(o=country_uri, p="dbo:birthPlace")
+    working = dbp_extract(dbp_select_s(o=country_uri, p="dbo:birthPlace"))
     working = dbp_json_to_list(working)
     working = random.choice(working)
     working = dbp_uri_to_text(working)
@@ -111,7 +120,7 @@ def dbp_cityServed(country_uri):
     - Returns a string with the name
     - SAME AS birthPlace
     """
-    working = dbp_extract_s(o=country_uri, p="dbp:cityServed")
+    working = dbp_extract(dbp_select_s(o=country_uri, p="dbp:cityServed"))
     working = dbp_json_to_list(working)
     working = random.choice(working)
     working = dbp_uri_to_text(working)
@@ -124,7 +133,7 @@ def dbp_nationalAnthem(country_uri):
     - The input can either be the URI or also dbp:Country
     - Returns a string with the national anthem, unnecessary quote marks also removed
     """
-    working = dbp_extract_o(s=country_uri, p="dbp:nationalAnthem")
+    working = dbp_extract(dbp_select_o(s=country_uri, p="dbp:nationalAnthem"))
     working = dbp_json_to_list(working, uri=False)
     return(working[0].replace('"',""))
 
@@ -135,7 +144,7 @@ def dbp_mouthLocation(country_uri):
     - The input can either be the URI or also dbp:Country
     - Returns a string with a river name, additional info in brackets removed
     """
-    working = dbp_extract_s(o=country_uri, p="dbp:mouthLocation")
+    working = dbp_extract(dbp_select_s(o=country_uri, p="dbp:mouthLocation"))
     working = dbp_json_to_list(working)
     working = random.choice(working)
     working = dbp_uri_to_text(working)
@@ -149,11 +158,8 @@ def dbp_locationCountry(country_uri):
     - Returns a string with a building name, additional info in brackets removed
     - If not narrowed to Architectural Structure, was too challenging
     """
-    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
     query = "SELECT ?object WHERE {?object dbp:locationCountry " + country_uri + ". ?object rdf:type dbo:ArchitecturalStructure.}"
-    sparql.setQuery(query)
-    sparql.setReturnFormat(JSON)
-    working = sparql.query().convert()
+    working = dbp_extract(query)
     working = dbp_json_to_list(working)
     working = random.choice(working)
     working = dbp_uri_to_text(working)
