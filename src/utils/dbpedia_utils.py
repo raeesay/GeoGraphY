@@ -141,4 +141,20 @@ def dbp_mouthLocation(country_uri):
     working = dbp_uri_to_text(working)
     return(re.sub(" \(.*?\)","",working))
 
-
+def dbp_locationCountry(country_uri):
+    """
+    dbp_locationCountry
+    - Function to retrieve an architectural structure for the country provided as input
+    - The input can either be the URI or also dbp:Country
+    - Returns a string with a building name, additional info in brackets removed
+    - If not narrowed to Architectural Structure, was too challenging
+    """
+    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
+    query = "SELECT ?object WHERE {?object dbp:locationCountry " + country_uri + ". ?object rdf:type dbo:ArchitecturalStructure.}"
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    working = sparql.query().convert()
+    working = dbp_json_to_list(working)
+    working = random.choice(working)
+    working = dbp_uri_to_text(working)
+    return(re.sub(" \(.*?\)","",working))
