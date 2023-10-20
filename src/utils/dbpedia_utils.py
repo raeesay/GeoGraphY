@@ -23,7 +23,7 @@ def dbp_select_s(o,p):
     - The object could be as it would be on dbpedia eg. dbr:Germany, or it can be the original URI
     - Returns a string
     """
-    query = "SELECT ?subject WHERE {?subject " + p + " " + o + ".}"
+    query = "SELECT ?object WHERE {?object " + p + " " + o + ".}"
     return(query)
 
 def dbp_extract(query):
@@ -84,8 +84,11 @@ def dbp_countryCode(country_uri):
     - The input can either be the URI or also dbp:Country
     - Returns a string with the dialling code
     """
-    working = dbp_extract(dbp_select_o(s=country_uri, p="dbo:countryCode"))
-    return(dbp_json_to_list(working, uri=False)[0])
+    try:
+        working = dbp_extract(dbp_select_o(s=country_uri, p="dbo:countryCode"))
+        return(dbp_json_to_list(working, uri=False)[0])
+    except:
+        return('')
 
 def dbp_leaderName(country_uri):
     """
@@ -94,23 +97,29 @@ def dbp_leaderName(country_uri):
     - The input can either be the URI or also dbp:Country
     - Returns a string with the leader names, with / between where there are multiple
     """
-    working = dbp_extract(dbp_select_o(s=country_uri, p="dbp:leaderName"))
-    working = dbp_json_to_list(working)
-    working = dbp_list_uri_to_text(working)
-    return("/".join(working))
+    try:
+        working = dbp_extract(dbp_select_o(s=country_uri, p="dbp:leaderName"))
+        working = dbp_json_to_list(working)
+        working = dbp_list_uri_to_text(working)
+        return("/".join(working))
+    except:
+        return('')
 
 def dbp_birthPlace(country_uri):
     """
     dbp_birthPlace
-    - Function to retrieve a random person born in the country for the country provided as input
+    - Function to retrieve a person born in the country for the country provided as input
     - The input can either be the URI or also dbp:Country
     - Returns a string with the name
     """
-    working = dbp_extract(dbp_select_s(o=country_uri, p="dbo:birthPlace"))
-    working = dbp_json_to_list(working)
-    working = random.choice(working)
-    working = dbp_uri_to_text(working)
-    return(working)
+    try:
+        working = dbp_extract(dbp_select_s(o=country_uri, p="dbo:birthPlace"))
+        working = dbp_json_to_list(working)
+        working = random.choice(working)
+        working = dbp_uri_to_text(working)
+        return(working)
+    except:
+        return('')
 
 def dbp_cityServed(country_uri):
     """
@@ -120,11 +129,14 @@ def dbp_cityServed(country_uri):
     - Returns a string with the name
     - SAME AS birthPlace
     """
-    working = dbp_extract(dbp_select_s(o=country_uri, p="dbp:cityServed"))
-    working = dbp_json_to_list(working)
-    working = random.choice(working)
-    working = dbp_uri_to_text(working)
-    return(working)
+    try:
+        working = dbp_extract(dbp_select_s(o=country_uri, p="dbp:cityServed"))
+        working = dbp_json_to_list(working)
+        working = random.choice(working)
+        working = dbp_uri_to_text(working)
+        return(working)
+    except:
+        return('')
 
 def dbp_nationalAnthem(country_uri):
     """
@@ -133,9 +145,12 @@ def dbp_nationalAnthem(country_uri):
     - The input can either be the URI or also dbp:Country
     - Returns a string with the national anthem, unnecessary quote marks also removed
     """
-    working = dbp_extract(dbp_select_o(s=country_uri, p="dbp:nationalAnthem"))
-    working = dbp_json_to_list(working, uri=False)
-    return(working[0].replace('"',""))
+    try:
+        working = dbp_extract(dbp_select_o(s=country_uri, p="dbp:nationalAnthem"))
+        working = dbp_json_to_list(working, uri=False)
+        return(working[0].replace('"',""))
+    except:
+        return('')
 
 def dbp_mouthLocation(country_uri):
     """
@@ -144,11 +159,14 @@ def dbp_mouthLocation(country_uri):
     - The input can either be the URI or also dbp:Country
     - Returns a string with a river name, additional info in brackets removed
     """
-    working = dbp_extract(dbp_select_s(o=country_uri, p="dbp:mouthLocation"))
-    working = dbp_json_to_list(working)
-    working = random.choice(working)
-    working = dbp_uri_to_text(working)
-    return(re.sub(" \(.*?\)","",working))
+    try:
+        working = dbp_extract(dbp_select_s(o=country_uri, p="dbp:mouthLocation"))
+        working = dbp_json_to_list(working)
+        working = random.choice(working)
+        working = dbp_uri_to_text(working)
+        return(re.sub(" \(.*?\)","",working))
+    except:
+        return('')
 
 def dbp_locationCountry(country_uri):
     """
@@ -158,9 +176,12 @@ def dbp_locationCountry(country_uri):
     - Returns a string with a building name, additional info in brackets removed
     - If not narrowed to Architectural Structure, was too challenging
     """
-    query = "SELECT ?object WHERE {?object dbp:locationCountry " + country_uri + ". ?object rdf:type dbo:ArchitecturalStructure.}"
-    working = dbp_extract(query)
-    working = dbp_json_to_list(working)
-    working = random.choice(working)
-    working = dbp_uri_to_text(working)
-    return(re.sub(" \(.*?\)","",working))
+    try:
+        query = "SELECT ?object WHERE {?object dbp:locationCountry " + country_uri + ". ?object rdf:type dbo:ArchitecturalStructure.}"
+        working = dbp_extract(query)
+        working = dbp_json_to_list(working)
+        working = random.choice(working)
+        working = dbp_uri_to_text(working)
+        return(re.sub(" \(.*?\)","",working))
+    except:
+        return('')
