@@ -57,3 +57,27 @@ def get_country_capital(capital_uri, rdf_capitals):
         capital_name = capital_row[0]
 
     return capital_name
+
+def get_dbp_uri(country_uri):
+    """
+    - Function to retrieve the dppedia URI of a country from local geography data
+    - Input is the country URI from the local data
+    """
+
+    query_uri = f"""
+                PREFIX gn: <http://www.geonames.org/ontology#>
+                PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+                SELECT ?dbp_uri
+                WHERE {{
+                    <{country_uri}> owl:sameAs ?dbp_uri
+                    FILTER regex(str(?dbp_uri), "dbpedia")
+                }}
+
+            """
+    dbp_uri = None
+
+    for row in rdf_countries.query(query_uri):
+        dbp_uri = row.dbp_uri
+
+    return dbp_uri
