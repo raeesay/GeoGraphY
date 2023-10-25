@@ -60,7 +60,7 @@ def get_country_capital(capital_uri, rdf_capitals):
 
 def get_dbp_uri(country_uri):
     """
-    - Function to retrieve the dppedia URI of a country from local geography data
+    - Function to retrieve the dbpedia URI of a country from local geography data
     - Input is the country URI from the local data
     """
 
@@ -109,3 +109,24 @@ def get_random_country_uri(rdf_countries):
         country_uri = row.country_uri
 
     return country_uri
+
+def get_continent(country_uri):
+    """
+    - Function to retrieve the continent URI of a country
+    - Input is a (local) country URI
+    """
+    query_continent = f"""
+            PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
+
+            SELECT ?continent_uri
+            WHERE {{
+                <{country_uri}> geographis:onContinent ?continent_uri .
+            }}
+        """
+
+    continent_uri = None
+
+    for row in rdf_countries.query(query_continent):
+        continent_uri = row.continent_uri
+
+    return continent_uri
