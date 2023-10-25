@@ -110,7 +110,7 @@ def get_random_country_uri(rdf_countries):
 
     return country_uri
 
-def get_continent(rdf_countries, country_uri):
+def get_continent_uri(rdf_countries, country_uri):
     """
     - Function to retrieve the continent URI of a country
     - Input is a (local) country URI and the countries rdf file
