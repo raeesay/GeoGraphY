@@ -81,3 +81,31 @@ def get_dbp_uri(country_uri):
         dbp_uri = row.dbp_uri
 
     return dbp_uri
+
+def get_random_country_uri(rdf_countries):
+    """
+    - Function to retrieve the URI of a randomly chosen country from local geography data
+    - Input is the countries rdf file
+    """
+    # Generate a random offset
+    max_offset = 240
+    random_offset = random.randint(0, max_offset)
+
+    # Query a random country
+    query_country = f"""
+        PREFIX gn: <http://www.geonames.org/ontology#>
+
+        SELECT ?country_uri
+        WHERE {{
+            ?country_uri a gn:Country.
+        }}
+        LIMIT 1
+        OFFSET {random_offset}
+    """
+
+    country_uri = None
+
+    for row in rdf_countries.query(query_country):
+        country_uri = row.country_uri
+
+    return country_uri
