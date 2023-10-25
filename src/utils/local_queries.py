@@ -58,10 +58,10 @@ def get_country_capital(capital_uri, rdf_capitals):
 
     return capital_name
 
-def get_dbp_uri(country_uri):
+def get_dbp_uri(rdf_countries, country_uri):
     """
     - Function to retrieve the dbpedia URI of a country from local geography data
-    - Input is the country URI from the local data
+    - Input is the country URI from the local data and the countries rdf file
     """
 
     query_uri = f"""
@@ -110,10 +110,10 @@ def get_random_country_uri(rdf_countries):
 
     return country_uri
 
-def get_continent(country_uri):
+def get_continent(rdf_countries, country_uri):
     """
     - Function to retrieve the continent URI of a country
-    - Input is a (local) country URI
+    - Input is a (local) country URI and the countries rdf file
     """
     query_continent = f"""
             PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
