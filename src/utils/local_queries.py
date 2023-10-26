@@ -130,3 +130,24 @@ def get_continent_uri(rdf_countries, country_uri):
         continent_uri = row.continent_uri
 
     return continent_uri
+
+def get_currency_uri(rdf_countries, country_uri):
+    """
+    - Function to retrieve the currency URI of a country
+    - Input is a (local) country URI and the countries rdf file
+    """
+    query_currency = f"""
+            PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
+
+            SELECT ?currency_uri
+            WHERE {{
+                <{country_uri}> geographis:currency ?currency_uri .
+            }}
+        """
+
+    currency_uri = None
+
+    for row in rdf_countries.query(query_currency):
+        currency_uri = row.currency_uri
+
+    return currency_uri
