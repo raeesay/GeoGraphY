@@ -33,19 +33,19 @@ def wrong_answers_country(rdf_countries, right_answer):
 
 def wrong_answers_capital(rdf_countries, right_answer):
     """
-        - Function to retrieve wrong answers for a question with countries as answers
-        - Inputs
-            - countries rdf file
-            - right_answer to the corresponding question in form of a captial URI
-        - Returns a list of 3 captial URIs of 3 randomly chosen countries
-        """
+    - Function to retrieve wrong answers for a question with capitals as answers
+    - Inputs
+        - countries rdf file
+        - right_answer to the corresponding question in form of a capital URI
+    - Returns a list of 3 different capital URIs of 3 randomly chosen countries
+    """
 
     # Query 3 random capitals
     query_capital = f"""
             PREFIX gn: <http://www.geonames.org/ontology#>
             PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
 
-            SELECT ?capital_uri
+            SELECT DISTINCT ?capital_uri
             WHERE {{
                 ?country_uri a gn:Country;
                             geographis:capital ?capital_uri .
