@@ -1,4 +1,5 @@
 import random
+import dbpedia_utils
 
 def wrong_answers_country(rdf_countries, right_answer):
     """
