@@ -11,7 +11,7 @@ class DataHandler:
         self.rdf_continents = self.getLocalData("continents")
         self.rdf_countries = self.getLocalData("countries")
         self.rdf_currencies = self.getLocalData("currencies")
-
+        self.checkInternetConnection()
 
 
     def getLocalData(self, name):

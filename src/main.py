@@ -1,8 +1,8 @@
-from utils.execution import Executer
+from utils.execution import Quiz
 
 
 if __name__ == "__main__":
-    quiz = Executer()
-    quiz.runQuiz()
+    quiz = Quiz()
+    quiz.run()
 
 

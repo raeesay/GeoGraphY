@@ -12,8 +12,8 @@ class Question:
         self.localData = dataHandler
 
     def questionCapitalOfCountry(self):
-        #has to return a dictionary with the (1) filled template, (2) correct answer and (3) false answers
-        template = "What is the capital of {country}"
+        #returns dictionary with the (1) filled template, (2) return sentence, (3) correct answer and (4) false answers
+        template = "What is the capital of {country}?"
 
         country, capital_uri = get_random_country(self.localData.rdf_countries)
         capital = get_country_capital(capital_uri, self.localData.rdf_capitals)
