@@ -122,3 +122,26 @@ def wrong_answers_currency(rdf_countries, right_answer):
         wrong_answers.append(row.currency_uri)
 
     return wrong_answers
+
+
+def wrong_answers_countryCode(right_answer):
+    """
+    - Function to retrieve wrong answers for a question with dialling code as answers
+    - Inputs
+        - right_answer to the corresponding question in form of a dialling code
+    - Returns a list of 3 dialling codes as strings
+    """
+
+    query_countryCode = f"""
+        SELECT DISTINCT ?object
+        WHERE {{
+            ?country dbo:countryCode ?object
+            FILTER(?object != <{right_answer}>)
+        }}
+    """
+
+    working = dbpedia_utils.dbp_extract(query_countryCode)
+    working = dbpedia_utils.dbp_json_to_list(working, uri=False)
+    wrong_answers = random.sample(working, k=3)
+
+    return wrong_answers
