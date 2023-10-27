@@ -57,3 +57,97 @@ def get_country_capital(capital_uri, rdf_capitals):
         capital_name = capital_row[0]
 
     return capital_name
+
+def get_dbp_uri(rdf_countries, country_uri):
+    """
+    - Function to retrieve the dbpedia URI of a country from local geography data
+    - Input is the country URI from the local data and the countries rdf file
+    """
+
+    query_uri = f"""
+                PREFIX gn: <http://www.geonames.org/ontology#>
+                PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+                SELECT ?dbp_uri
+                WHERE {{
+                    <{country_uri}> owl:sameAs ?dbp_uri
+                    FILTER regex(str(?dbp_uri), "dbpedia")
+                }}
+
+            """
+    dbp_uri = None
+
+    for row in rdf_countries.query(query_uri):
+        dbp_uri = row.dbp_uri
+
+    return str("<"+dbp_uri+">")
+
+def get_random_country_uri(rdf_countries):
+    """
+    - Function to retrieve the URI of a randomly chosen country from local geography data
+    - Input is the countries rdf file
+    """
+    # Generate a random offset
+    max_offset = 240
+    random_offset = random.randint(0, max_offset)
+
+    # Query a random country
+    query_country = f"""
+        PREFIX gn: <http://www.geonames.org/ontology#>
+
+        SELECT ?country_uri
+        WHERE {{
+            ?country_uri a gn:Country.
+        }}
+        LIMIT 1
+        OFFSET {random_offset}
+    """
+
+    country_uri = None
+
+    for row in rdf_countries.query(query_country):
+        country_uri = row.country_uri
+
+    return country_uri
+
+def get_continent_uri(rdf_countries, country_uri):
+    """
+    - Function to retrieve the continent URI of a country
+    - Input is a (local) country URI and the countries rdf file
+    """
+    query_continent = f"""
+            PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
+
+            SELECT ?continent_uri
+            WHERE {{
+                <{country_uri}> geographis:onContinent ?continent_uri .
+            }}
+        """
+
+    continent_uri = None
+
+    for row in rdf_countries.query(query_continent):
+        continent_uri = row.continent_uri
+
+    return continent_uri
+
+def get_currency_uri(rdf_countries, country_uri):
+    """
+    - Function to retrieve the currency URI of a country
+    - Input is a (local) country URI and the countries rdf file
+    """
+    query_currency = f"""
+            PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
+
+            SELECT ?currency_uri
+            WHERE {{
+                <{country_uri}> geographis:currency ?currency_uri .
+            }}
+        """
+
+    currency_uri = None
+
+    for row in rdf_countries.query(query_currency):
+        currency_uri = row.currency_uri
+
+    return currency_uri
