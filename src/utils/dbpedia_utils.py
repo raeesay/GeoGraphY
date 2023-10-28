@@ -75,6 +75,17 @@ def dbp_list_uri_to_text(string_list):
     """
     return([dbp_uri_to_text(string) for string in string_list])
 
+def dbp_empty_return(fn_output):
+    """
+        dbp_empty_return
+        - Function to check if the return from dbpedia is empty
+        - Returns 1 if non-empty, 0 if empty
+        """
+    if fn_output=='':
+        return(0)
+    else:
+        return(1)
+
 # Question specific functions --------------------------------------------------------------------
 
 def dbp_countryCode(country_uri):
