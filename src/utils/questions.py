@@ -19,12 +19,15 @@ class Question:
 
         country, capital_uri = get_random_country(self.localData.rdf_countries)
         capital = get_country_capital(capital_uri, self.localData.rdf_capitals)
-        wrong_answers = wrong_answers_countryCode(capital)
+        print(country)
+        print(capital)
+        wrong_answers_uri = wrong_answers_capital(self.localData.rdf_countries, capital)
+        wrong_answers = [get_country_capital(cap_uri, self.localData.rdf_capitals) for cap_uri in wrong_answers_uri]
 
         question = {"template": template.format(country=country),
                     "return": "The capital of {country} is {capital}".format(country=country, capital=capital),
                     "correct answer": capital,
-                    "wrong answers": ["0", "1", "2"]}
+                    "wrong answers": wrong_answers}
         return question
 
     def questionDiallingCodeOfCountry(self):
@@ -32,8 +35,14 @@ class Question:
 
         local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
         code = dbp_countryCode(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        while (not dbp_empty_return(code)):
+            print("retrying to get a country with an existing dialling code!")
+            local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+            code = dbp_countryCode(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
         wrong_answers = wrong_answers_countryCode(code)
-        print(wrong_answers)
+
 
         question = {"template": template.format(country=country),
                     "return": "The dialling code of {country} is {code}".format(country=country, code=code),
