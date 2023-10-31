@@ -25,6 +25,9 @@ class Quiz:
         q1 = self.qGenerator.questionCapitalOfCountry()
         self.questionPrinting(q1)
 
+        q2 = self.qGenerator.questionDiallingCodeOfCountry()
+        self.questionPrinting(q2)
+
         return
 
     def questionPrinting(self, question):
