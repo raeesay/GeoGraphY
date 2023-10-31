@@ -28,10 +28,13 @@ class Quiz:
 
         q2 = self.qGenerator.questionDiallingCodeOfCountry()
         self.questionPrinting(q2)
-        '''
 
         q3 = self.qGenerator.questionAirportCountryLocation()
         self.questionPrinting(q3)
+        '''
+
+        q4 = self.qGenerator.questionNationalAnthem()
+        self.questionPrinting(q4)
 
         return
 

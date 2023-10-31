@@ -71,3 +71,25 @@ class Question:
                     "wrong answers": wrong_answers}
 
         return question
+
+
+    def questionNationalAnthem(self):
+        template = "In which country is {anthem} used as a national anthem?"
+
+        local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+        anthem = dbp_nationalAnthem(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        while (not dbp_empty_return(anthem)):
+            print("retrying to get a country with a national anthem!")
+            local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+            anthem = dbp_nationalAnthem(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, country)
+        wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
+
+        question = {"template": template.format(anthem=anthem),
+                    "return": "The national anthem of {country} is {anthem}".format(country=country, anthem=anthem),
+                    "correct answer": country,
+                    "wrong answers": wrong_answers}
+
+        return question
