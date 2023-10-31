@@ -1,6 +1,7 @@
 # will be called by main and run the actual code
 from utils.questions import Question
 from utils.dataHandling import DataHandler
+import random
 
 class Quiz:
     # can be thought of as quiz generator
@@ -22,17 +23,28 @@ class Quiz:
 
 
     def run(self):
+
         q1 = self.qGenerator.questionCapitalOfCountry()
         self.questionPrinting(q1)
+
+        q2 = self.qGenerator.questionDiallingCodeOfCountry()
+        self.questionPrinting(q2)
 
         return
 
     def questionPrinting(self, question):
         print("Question:", question["template"])
 
-        print("1. {correct}".format(correct=question["correct answer"]))
+        answers = question["wrong answers"]
+        correct_index = random.randint(0,3)
+        answers.insert(correct_index, question["correct answer"])
+
+
+        for index, answer in enumerate(answers):
+            print(f"{index + 1}. {answer}")
+
         x = input("Please choose the correct option: ")
-        if x == "1":
+        if x == str(correct_index + 1):
             print("Correct!", question["return"] + "!")
         else:
             print("Try again!", question["return"] + ".")

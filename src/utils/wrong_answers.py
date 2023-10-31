@@ -1,5 +1,5 @@
 import random
-import dbpedia_utils
+from utils.dbpedia_utils import *
 
 def wrong_answers_country(rdf_countries, right_answer):
     """
@@ -141,8 +141,8 @@ def wrong_answers_countryCode(right_answer):
         }}
     """
 
-    working = dbpedia_utils.dbp_extract(query_countryCode)
-    working = dbpedia_utils.dbp_json_to_list(working, uri=False)
+    working = dbp_extract(query_countryCode)
+    working = dbp_json_to_list(working, uri=False)
     wrong_answers = random.sample(working, k=3)
 
     return wrong_answers

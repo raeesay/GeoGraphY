@@ -95,20 +95,24 @@ def get_random_country_uri(rdf_countries):
     query_country = f"""
         PREFIX gn: <http://www.geonames.org/ontology#>
 
-        SELECT ?country_uri
+        SELECT ?country_uri ?name
         WHERE {{
             ?country_uri a gn:Country.
+            ?country_uri gn:name ?name.
         }}
+        
         LIMIT 1
         OFFSET {random_offset}
     """
 
     country_uri = None
+    country_name = None
 
     for row in rdf_countries.query(query_country):
         country_uri = row.country_uri
+        country_name = row.name
 
-    return country_uri
+    return country_uri, country_name
 
 def get_continent_uri(rdf_countries, country_uri):
     """
