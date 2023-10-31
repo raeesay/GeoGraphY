@@ -20,15 +20,20 @@ class Quiz:
         print("Welcome to GeoGraphY!")
         self.localData = DataHandler()
         self.qGenerator = Question(self.localData)
+        self.difficulty, self.nQuestions = self.getSettings()
 
 
     def run(self):
-
+        '''
         q1 = self.qGenerator.questionCapitalOfCountry()
         self.questionPrinting(q1)
 
         q2 = self.qGenerator.questionDiallingCodeOfCountry()
         self.questionPrinting(q2)
+        '''
+
+        q3 = self.qGenerator.questionAirportCountryLocation()
+        self.questionPrinting(q3)
 
         return
 
@@ -48,3 +53,20 @@ class Quiz:
             print("Correct!", question["return"] + "!")
         else:
             print("Try again!", question["return"] + ".")
+
+
+
+    def getSettings(self):
+        print("Available Difficulty-Levels for this Quiz:")
+        print("1: Easy")
+        print("2: Medium")
+        print("3: Advanced")
+        difficulty = input("How difficult shall the questions be?")
+        if difficulty not in ["1", "2", "3"]:
+            print("Wrong input for 'difficulty'. The quiz will have the difficulty 'Easy' as default value.")
+            difficulty = 1
+
+        nQuestions = input("Please choose the number of questions you want to be asked. The number shall be between 1 and 25.")
+        if int(nQuestions) < 1 or int(nQuestions) > 25:
+            print("Wrong input for the number of Questions. The quiz will have 10 questions as default value.")
+            nQuestions = 10
