@@ -1,6 +1,7 @@
 # will be called from execution to generate questions
 from utils.local_queries import *
 from utils.dbpedia_utils import *
+from utils.wrong_answers import *
 
 
 class Question:
@@ -18,6 +19,7 @@ class Question:
 
         country, capital_uri = get_random_country(self.localData.rdf_countries)
         capital = get_country_capital(capital_uri, self.localData.rdf_capitals)
+        wrong_answers = wrong_answers_countryCode(capital)
 
         question = {"template": template.format(country=country),
                     "return": "The capital of {country} is {capital}".format(country=country, capital=capital),
@@ -30,9 +32,11 @@ class Question:
 
         local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
         code = dbp_countryCode(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+        wrong_answers = wrong_answers_countryCode(code)
+        print(wrong_answers)
 
         question = {"template": template.format(country=country),
                     "return": "The dialling code of {country} is {code}".format(country=country, code=code),
                     "correct answer": code,
-                    "wrong answers": ["0", "1", "2"]}
+                    "wrong answers": wrong_answers}
         return question
