@@ -8,12 +8,10 @@ class Quiz:
 
     # shuffles questions
     # handles difficulty of questions
-    # keep track of correctly answered questions (and scores)
-    # takes in settings from the user (such as difficulty or the amount of questions) (optional)
+    # keep track of correctly answered questions (and scores) (optional)
+    # takes in settings from the user (such as difficulty or the amount of questions)
 
-    # should consider writing one function which handles all the printing for a question
-    #  --> makes code more structured because for each question we only have to call one or two functions
-    # TODO: insert suffling beween answer options in questionPrinting()
+    # TODO: take setting inputs as parameters to adjust the quiz
 
 
     def __init__(self):
