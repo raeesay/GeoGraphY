@@ -155,3 +155,24 @@ def get_currency_uri(rdf_countries, country_uri):
         currency_uri = row.currency_uri
 
     return currency_uri
+
+
+def get_country_name(country_uri, rdf_countries):
+
+        # Query for the country's name using the country uri
+        query_country = f"""
+            PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
+            PREFIX gn: <http://www.geonames.org/ontology#>
+
+            SELECT ?country_name
+            WHERE {{
+                <{country_uri}> gn:name ?country_name .
+            }}
+        """
+
+        country_name = None
+
+        for country_row in rdf_countries.query(query_country):
+            country_name = country_row[0]
+
+        return country_name

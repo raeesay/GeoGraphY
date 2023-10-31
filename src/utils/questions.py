@@ -49,3 +49,25 @@ class Question:
                     "correct answer": code,
                     "wrong answers": wrong_answers}
         return question
+
+
+    def questionAirportCountryLocation(self):
+        template = "Which country is the airport {airport} located in?"
+
+        local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+        airport = dbp_cityServed(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        while (not dbp_empty_return(airport)):
+            print("retrying to get a country with an airport!")
+            local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+            airport = dbp_cityServed(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, country)
+        wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
+
+        question = {"template": template.format(airport=airport),
+                    "return": "The airport {airport} is located in {country}".format(country=country, airport=airport),
+                    "correct answer": country,
+                    "wrong answers": wrong_answers}
+
+        return question
