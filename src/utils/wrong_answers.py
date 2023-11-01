@@ -34,7 +34,8 @@ def wrong_answers_country(rdf_countries, right_answer):
         wrong_answers = []
 
         for row in ["http://telegraphis.net/data/countries/DE#DE", "http://telegraphis.net/data/countries/NE#NE", "http://telegraphis.net/data/countries/CL#CL", "http://telegraphis.net/data/countries/LA#LA"]:
-            wrong_answers.append(row)
+            if row != right_answer:
+                wrong_answers.append(row)
 
         wrong_answers = wrong_answers[0:3]
 
