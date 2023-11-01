@@ -34,10 +34,13 @@ class Quiz:
 
         q4 = self.qGenerator.questionNationalAnthem()
         self.questionPrinting(q4)
-        '''
 
         q5 = self.qGenerator.questionPersonBorn()
         self.questionPrinting(q5)
+        '''
+
+        q6 = self.qGenerator.questionLeaderName()
+        self.questionPrinting(q6)
 
         return
 
