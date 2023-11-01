@@ -24,10 +24,19 @@ def wrong_answers_country(rdf_countries, right_answer):
         LIMIT 3
     """
 
-    wrong_answers = []
+    try:
+        wrong_answers = []
 
-    for row in rdf_countries.query(query_country):
-        wrong_answers.append(row.country_uri)
+        for row in rdf_countries.query(query_country):
+            wrong_answers.append(row.country_uri)
+
+    except:
+        wrong_answers = []
+
+        for row in ["http://telegraphis.net/data/countries/DE#DE", "http://telegraphis.net/data/countries/NE#NE", "http://telegraphis.net/data/countries/CL#CL", "http://telegraphis.net/data/countries/LA#LA"]:
+            wrong_answers.append(row)
+
+        wrong_answers = wrong_answers[0:3]
 
     return wrong_answers
 
