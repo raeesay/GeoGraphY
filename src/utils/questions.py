@@ -93,3 +93,45 @@ class Question:
                     "wrong answers": wrong_answers}
 
         return question
+
+    def questionPersonBorn(self):
+        template = "In which country was {person} born?"
+
+        local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+        person = dbp_birthPlace(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        while (not dbp_empty_return(person)):
+            print("retrying to get a person born in a country!")
+            local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+            person = dbp_birthPlace(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, country)
+        wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
+
+        question = {"template": template.format(person=person),
+                    "return": "{person} was born in {country}".format(country=country, person=person),
+                    "correct answer": country,
+                    "wrong answers": wrong_answers}
+
+        return question
+
+    def questionLeaderName(self):
+        template = "Which country is lead by {person}?"
+
+        local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+        person = dbp_leaderName(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        while (not dbp_empty_return(person)):
+            print("retrying to get the leaders of a country!")
+            local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+            person = dbp_leaderName(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, country)
+        wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
+
+        question = {"template": template.format(person=person),
+                    "return": "{country} is lead by {person}".format(country=country, person=person),
+                    "correct answer": country,
+                    "wrong answers": wrong_answers}
+
+        return question

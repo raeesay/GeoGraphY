@@ -31,10 +31,16 @@ class Quiz:
 
         q3 = self.qGenerator.questionAirportCountryLocation()
         self.questionPrinting(q3)
-        '''
 
         q4 = self.qGenerator.questionNationalAnthem()
         self.questionPrinting(q4)
+
+        q5 = self.qGenerator.questionPersonBorn()
+        self.questionPrinting(q5)
+        '''
+
+        q6 = self.qGenerator.questionLeaderName()
+        self.questionPrinting(q6)
 
         return
 
