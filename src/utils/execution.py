@@ -22,25 +22,32 @@ class Quiz:
 
 
     def run(self):
-        '''
-        q1 = self.qGenerator.questionCapitalOfCountry()
-        self.questionPrinting(q1)
 
-        q2 = self.qGenerator.questionDiallingCodeOfCountry()
-        self.questionPrinting(q2)
+        questions = {"1": ["questionCapitalOfCountry",
+                           "questionLeaderName",
+                           "questionNationalAnthem"], # currency, population
 
-        q3 = self.qGenerator.questionAirportCountryLocation()
-        self.questionPrinting(q3)
+                     "2": ["questionCapitalOfCountry",
+                           "questionLeaderName",
+                           "questionNationalAnthem",
+                           "questionAirportCountryLocation"], # easy + location of building/company
 
-        q4 = self.qGenerator.questionNationalAnthem()
-        self.questionPrinting(q4)
+                     "3": ["questionCapitalOfCountry",
+                           "questionLeaderName",
+                           "questionNationalAnthem",
+                           "questionAirportCountryLocation",
+                           "questionDiallingCodeOfCountry",
+                           "questionPersonBorn"] # easy + medium + mouth of river location
+                     }
 
-        q5 = self.qGenerator.questionPersonBorn()
-        self.questionPrinting(q5)
-        '''
+        question_sampling = random.choices(questions[self.difficulty], k=int(self.nQuestions))
+        quiz = [getattr(self.qGenerator, question) for question in question_sampling]
 
-        q6 = self.qGenerator.questionLeaderName()
-        self.questionPrinting(q6)
+        for question in quiz:
+            self.questionPrinting(question())
+
+        #q6 = self.qGenerator.questionLeaderName()
+        #self.questionPrinting(q6)
 
         return
 
@@ -71,7 +78,7 @@ class Quiz:
         difficulty = input("How difficult shall the questions be? Please choose a number from 1 to 3: ")
         if difficulty not in ["1", "2", "3"]:
             print("Wrong input for 'difficulty'. The quiz will have the difficulty 'Easy' as default value.")
-            difficulty = 1
+            difficulty = "1"
         elif difficulty == "1":
             print("The quiz will have the difficulty 'Easy'.")
         elif difficulty == "2":
