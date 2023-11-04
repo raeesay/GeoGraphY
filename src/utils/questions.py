@@ -19,8 +19,6 @@ class Question:
 
         country, capital_uri = get_random_country(self.localData.rdf_countries)
         capital = get_country_capital(capital_uri, self.localData.rdf_capitals)
-        print(country)
-        print(capital)
         wrong_answers_uri = wrong_answers_capital(self.localData.rdf_countries, capital)
         wrong_answers = [get_country_capital(cap_uri, self.localData.rdf_capitals) for cap_uri in wrong_answers_uri]
 
