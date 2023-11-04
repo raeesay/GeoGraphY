@@ -80,7 +80,7 @@ def get_dbp_uri(rdf_countries, country_uri):
     for row in rdf_countries.query(query_uri):
         dbp_uri = row.dbp_uri
 
-    return str("<"+dbp_uri+">")
+    return str("<"+str(dbp_uri)+">")
 
 def get_random_country_uri(rdf_countries):
     """
