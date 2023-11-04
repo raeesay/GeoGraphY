@@ -1,4 +1,6 @@
 # will be called by main and run the actual code
+import time
+
 from utils.questions import Question
 from utils.dataHandling import DataHandler
 import random
@@ -45,6 +47,7 @@ class Quiz:
 
         for question in quiz:
             self.questionPrinting(question())
+            time.sleep(1)
 
         #q6 = self.qGenerator.questionLeaderName()
         #self.questionPrinting(q6)
@@ -52,12 +55,12 @@ class Quiz:
         return
 
     def questionPrinting(self, question):
+        print("")
         print("Question:", question["template"])
 
         answers = question["wrong answers"]
         correct_index = random.randint(0,3)
         answers.insert(correct_index, question["correct answer"])
-
 
         for index, answer in enumerate(answers):
             print(f"{index + 1}. {answer}")
