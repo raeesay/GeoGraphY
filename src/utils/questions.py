@@ -161,12 +161,12 @@ class Question:
 
         local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
         currency_uri = get_currency_uri(self.localData.rdf_countries, local_country_uri)
-        #currency = get_currency_name(self.localData.rdf_currencies, currency_uri)
+        currency = get_currency_name(self.localData.rdf_currencies, currency_uri)
         wrong_answers_uri = wrong_answers_currency(self.localData.rdf_countries, currency_uri)
-        #wrong_answers = [get_currency_name( self.localData.rdf_currencies, curr_uri) for curr_uri in wrong_answers_uri]
+        wrong_answers = [get_currency_name( self.localData.rdf_currencies, curr_uri) for curr_uri in wrong_answers_uri]
 
         question = {"template": template.format(country=country),
-                    "return": "The currency in {country} is {currency}".format(country=country, currency=currency_uri),
-                    "correct answer": currency_uri,
-                    "wrong answers": wrong_answers_uri}
+                    "return": "The currency in {country} is {currency}".format(country=country, currency=currency),
+                    "correct answer": currency,
+                    "wrong answers": wrong_answers}
         return question

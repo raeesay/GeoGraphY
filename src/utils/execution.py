@@ -33,11 +33,13 @@ class Quiz:
                      "2": ["questionCapitalOfCountry",
                            "questionLeaderName",
                            "questionNationalAnthem",
+                           "questionCurrencyInCountry",
                            "questionAirportCountryLocation"], # easy + location of building/company
 
                      "3": ["questionCapitalOfCountry",
                            "questionLeaderName",
                            "questionNationalAnthem",
+                           "questionCurrencyInCountry",
                            "questionAirportCountryLocation",
                            "questionDiallingCodeOfCountry",
                            "questionPersonBorn"] # easy + medium + mouth of river location
