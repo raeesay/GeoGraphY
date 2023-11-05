@@ -27,7 +27,8 @@ class Quiz:
 
         questions = {"1": ["questionCapitalOfCountry",
                            "questionLeaderNameEasy",
-                           "questionNationalAnthem"], # currency, population
+                           "questionNationalAnthem",
+                           "questionCurrencyInCountry"], # currency, population
 
                      "2": ["questionCapitalOfCountry",
                            "questionLeaderName",
