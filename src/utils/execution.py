@@ -28,16 +28,21 @@ class Quiz:
         questions = {"1": ["questionCapitalOfCountry",
                            "questionLeaderNameEasy",
                            "questionNationalAnthem",
-                           "questionCurrencyInCountry"], # currency, population
+                           "questionCurrencyInCountry",
+                           "questionPopulationEasy"], # currency, population
 
                      "2": ["questionCapitalOfCountry",
                            "questionLeaderName",
                            "questionNationalAnthem",
+                           "questionCurrencyInCountry",
+                           "questionPopulation",
                            "questionAirportCountryLocation"], # easy + location of building/company
 
                      "3": ["questionCapitalOfCountry",
                            "questionLeaderName",
                            "questionNationalAnthem",
+                           "questionCurrencyInCountry",
+                           "questionPopulation",
                            "questionAirportCountryLocation",
                            "questionDiallingCodeOfCountry",
                            "questionPersonBorn"] # easy + medium + mouth of river location
