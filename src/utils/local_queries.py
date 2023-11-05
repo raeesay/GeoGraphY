@@ -93,17 +93,53 @@ def get_random_country_uri(rdf_countries):
 
     # Query a random country
     query_country = f"""
-        PREFIX gn: <http://www.geonames.org/ontology#>
+            PREFIX gn: <http://www.geonames.org/ontology#>
 
-        SELECT ?country_uri ?name
-        WHERE {{
-            ?country_uri a gn:Country.
-            ?country_uri gn:name ?name.
-        }}
-        
-        LIMIT 1
-        OFFSET {random_offset}
+            SELECT ?country_uri ?name
+            WHERE {{
+                ?country_uri a gn:Country.
+                ?country_uri gn:name ?name.
+            }}
+
+            LIMIT 1
+            OFFSET {random_offset}
+        """
+
+    country_uri = None
+    country_name = None
+
+    for row in rdf_countries.query(query_country):
+        country_uri = row.country_uri
+        country_name = row.name
+
+    return country_uri, country_name
+
+
+def get_random_country_uri_easy(rdf_countries):
     """
+    - Function to retrieve the URI of a randomly chosen country from local geography data,
+    where the population is above 30 million
+    - Input is the countries rdf file
+    """
+    # Generate a random offset
+    max_offset = 50
+    random_offset = random.randint(0, max_offset)
+
+    # Query a random country
+    query_country = f"""
+                PREFIX gn: <http://www.geonames.org/ontology#>
+
+                SELECT ?country_uri ?name
+                WHERE {{
+                    ?country_uri a gn:Country.
+                    ?country_uri gn:name ?name.
+                    ?country_uri gn:population ?pop.
+                    FILTER(xsd:integer(?pop)>30000000)
+                }}
+
+                LIMIT 1
+                OFFSET {random_offset}
+            """
 
     country_uri = None
     country_name = None
