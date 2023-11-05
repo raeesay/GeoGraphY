@@ -212,3 +212,27 @@ def get_country_name(country_uri, rdf_countries):
             country_name = country_row[0]
 
         return country_name
+
+
+def get_currency_name(rdf_currencies, currency_uri):
+    # Query for the currency's name using the currency uri
+    query_name = f"""
+            PREFIX money: <http://telegraphis.net/ontology/money/money#>
+
+            SELECT ?currency_name
+            WHERE {{
+                <{currency_uri}> money:name ?currency_name .
+            }}
+        """
+
+    currency_name = None
+
+    for name_row in rdf_currencies.query(query_name):
+        currency_name = name_row.currency_name
+
+    return currency_name
+
+    for name_row in rdf_currencies.query(query_name, initBindings={'currency_uri': currency_uri}):
+        currency_name = name_row.currency_name
+
+    return currency_name
