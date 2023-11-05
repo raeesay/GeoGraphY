@@ -159,7 +159,7 @@ def dbp_nationalAnthem(country_uri):
     try:
         working = dbp_extract(dbp_select_o(s=country_uri, p="dbp:nationalAnthem"))
         working = dbp_json_to_list(working, uri=False)
-        return(working[0].replace('"',""))
+        return(working[0].replace('"',"").replace('File:',"").replace('.ogg','').replace('(instrumental)',''))
     except:
         return('')
 
