@@ -19,7 +19,7 @@ class Question:
 
         country, capital_uri = get_random_country(self.localData.rdf_countries)
         capital = get_country_capital(capital_uri, self.localData.rdf_capitals)
-        wrong_answers_uri = wrong_answers_capital(self.localData.rdf_countries, capital)
+        wrong_answers_uri = wrong_answers_capital(self.localData.rdf_countries, capital_uri)
         wrong_answers = [get_country_capital(cap_uri, self.localData.rdf_capitals) for cap_uri in wrong_answers_uri]
 
         question = {"template": template.format(country=country),
@@ -60,7 +60,7 @@ class Question:
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
             airport = dbp_cityServed(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
 
-        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, country)
+        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, local_country_uri)
         wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
 
         question = {"template": template.format(airport=airport),
@@ -82,7 +82,7 @@ class Question:
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
             anthem = dbp_nationalAnthem(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
 
-        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, country)
+        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, local_country_uri)
         wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
 
         question = {"template": template.format(anthem=anthem),
@@ -103,7 +103,7 @@ class Question:
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
             person = dbp_birthPlace(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
 
-        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, country)
+        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, local_country_uri)
         wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
 
         question = {"template": template.format(person=person),
@@ -124,7 +124,7 @@ class Question:
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
             person = dbp_leaderName(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
 
-        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, country)
+        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, local_country_uri)
         wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
 
         question = {"template": template.format(person=person),
@@ -145,7 +145,7 @@ class Question:
             local_country_uri, country = get_random_country_uri_easy(self.localData.rdf_countries)
             person = dbp_leaderName(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
 
-        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, country)
+        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, local_country_uri)
         wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
 
         question = {"template": template.format(person=person),
