@@ -170,3 +170,20 @@ class Question:
                     "correct answer": currency,
                     "wrong answers": wrong_answers}
         return question
+
+    def questionPopulation(self):
+        #returns dictionary with the (1) filled template, (2) return sentence, (3) correct answer and (4) false answers
+        template = "Which country in {continent} has a population of {pop}?"
+
+        local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+        continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
+        pop = get_population(self.localData.rdf_countries, local_country_uri)
+        #continent =
+        wrong_answers_uri = wrong_answers_country_continent(self.localData.rdf_countries, local_country_uri, continent_uri)
+        wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
+
+        question = {"template": template.format(continent=continent_uri, pop=pop),
+                    "return": "{country} has a population of {pop}".format(country=country, pop=pop),
+                    "correct answer": country,
+                    "wrong answers": wrong_answers}
+        return question
