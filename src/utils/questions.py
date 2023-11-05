@@ -161,6 +161,12 @@ class Question:
 
         local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
         currency_uri = get_currency_uri(self.localData.rdf_countries, local_country_uri)
+
+        while (currency_uri == None):
+            print("retrying to get the currency of a country!")
+            local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+            currency_uri = get_currency_uri(self.localData.rdf_countries, local_country_uri)
+
         currency = get_currency_name(self.localData.rdf_currencies, currency_uri)
         wrong_answers_uri = wrong_answers_currency(self.localData.rdf_countries, currency_uri)
         wrong_answers = [get_currency_name( self.localData.rdf_currencies, curr_uri) for curr_uri in wrong_answers_uri]
@@ -178,6 +184,13 @@ class Question:
         local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
         continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
         pop = get_population(self.localData.rdf_countries, local_country_uri)
+
+        while ((continent_uri == None) or (pop == None)):
+            print("retrying to get the continent and population of a country!")
+            local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+            continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
+            pop = get_population(self.localData.rdf_countries, local_country_uri)
+
         #continent =
         wrong_answers_uri = wrong_answers_country_continent(self.localData.rdf_countries, local_country_uri, continent_uri)
         wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
@@ -195,6 +208,13 @@ class Question:
         local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
         continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
         pop = get_population(self.localData.rdf_countries, local_country_uri)
+
+        while ((continent_uri == None) or (pop == None)):
+            print("retrying to get the continent and population of a country!")
+            local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+            continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
+            pop = get_population(self.localData.rdf_countries, local_country_uri)
+
         #continent =
         wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, local_country_uri)
         wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
