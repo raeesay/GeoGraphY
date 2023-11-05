@@ -232,7 +232,21 @@ def get_currency_name(rdf_currencies, currency_uri):
 
     return currency_name
 
-    for name_row in rdf_currencies.query(query_name, initBindings={'currency_uri': currency_uri}):
-        currency_name = name_row.currency_name
 
-    return currency_name
+def get_population(rdf_countries, country_uri):
+    # Query for the population using the country uri
+    query_pop = f"""
+            PREFIX gn: <http://www.geonames.org/ontology#>
+
+            SELECT ?pop
+            WHERE {{
+                <{country_uri}> gn:population ?pop .
+            }}
+        """
+
+    pop = None
+
+    for pop_row in rdf_countries.query(query_pop):
+        pop = pop_row.pop
+
+    return pop
