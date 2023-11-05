@@ -26,7 +26,7 @@ class Quiz:
     def run(self):
 
         questions = {"1": ["questionCapitalOfCountry",
-                           "questionLeaderName",
+                           "questionLeaderNameEasy",
                            "questionNationalAnthem"], # currency, population
 
                      "2": ["questionCapitalOfCountry",
