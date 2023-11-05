@@ -29,7 +29,7 @@ class Quiz:
                            "questionLeaderNameEasy",
                            "questionNationalAnthem",
                            "questionCurrencyInCountry",
-                           "questionPopulation"], # currency, population
+                           "questionPopulationEasy"], # currency, population
 
                      "2": ["questionCapitalOfCountry",
                            "questionLeaderName",
