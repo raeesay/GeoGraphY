@@ -45,7 +45,9 @@ class Quiz:
                            "questionPopulation",
                            "questionAirportCountryLocation",
                            "questionDiallingCodeOfCountry",
-                           "questionPersonBorn"] # easy + medium + mouth of river location
+                           "questionPersonBorn",
+                           "questionRiverCountry",
+                           "questionBuildingCountry"] # easy + medium + mouth of river location
                      }
 
         question_sampling = random.choices(questions[self.difficulty], k=int(self.nQuestions))

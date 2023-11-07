@@ -182,20 +182,20 @@ class Question:
         template = "Which country in {continent} has a population of {pop}?"
 
         local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
-        continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
+        continent_uri, continent = get_continent_uri(self.localData.rdf_countries, local_country_uri)
         pop = get_population(self.localData.rdf_countries, local_country_uri)
 
-        while ((continent_uri == None) or (pop == None)):
+        while ((continent == None) or (pop == None)):
             print("retrying to get the continent and population of a country!")
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
-            continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
+            continent_uri, continent = get_continent_uri(self.localData.rdf_countries, local_country_uri)
             pop = get_population(self.localData.rdf_countries, local_country_uri)
 
         #continent =
         wrong_answers_uri = wrong_answers_country_continent(self.localData.rdf_countries, local_country_uri, continent_uri)
         wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
 
-        question = {"template": template.format(continent=continent_uri, pop=pop),
+        question = {"template": template.format(continent=continent, pop=pop),
                     "return": "{country} has a population of {pop}".format(country=country, pop=pop),
                     "correct answer": country,
                     "wrong answers": wrong_answers}
@@ -206,21 +206,63 @@ class Question:
         template = "Which country in {continent} has a population of {pop}?"
 
         local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
-        continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
+        continent_uri, continent = get_continent_uri(self.localData.rdf_countries, local_country_uri)
         pop = get_population(self.localData.rdf_countries, local_country_uri)
 
-        while ((continent_uri == None) or (pop == None)):
+        while ((continent == None) or (pop == None)):
             print("retrying to get the continent and population of a country!")
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
-            continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
+            continent_uri, continent = get_continent_uri(self.localData.rdf_countries, local_country_uri)
             pop = get_population(self.localData.rdf_countries, local_country_uri)
 
         #continent =
         wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, local_country_uri)
         wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
 
-        question = {"template": template.format(continent=continent_uri, pop=pop),
+        question = {"template": template.format(continent=continent, pop=pop),
                     "return": "{country} has a population of {pop}".format(country=country, pop=pop),
                     "correct answer": country,
                     "wrong answers": wrong_answers}
+        return question
+    
+    def questionBuildingCountry(self):
+        template = "In which country is {building} located?"
+
+        local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+        building = dbp_locationCountry(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        while (not dbp_empty_return(building)):
+            print("retrying to get the leaders of a country!")
+            local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+            building = dbp_locationCountry(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, local_country_uri)
+        wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
+
+        question = {"template": template.format(building=building),
+                    "return": "{building} is located in {country}.".format(country=country, building=building),
+                    "correct answer": country,
+                    "wrong answers": wrong_answers}
+
+        return question
+    
+    def questionRiverCountry(self):
+        template = "In which country is {river} located?"
+
+        local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+        river = dbp_mouthLocation(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        while (not dbp_empty_return(river)):
+            print("retrying to get the leaders of a country!")
+            local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
+            river = dbp_mouthLocation(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
+
+        wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, local_country_uri)
+        wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
+
+        question = {"template": template.format(river=river),
+                    "return": "{river} is located in {country}.".format(country=country, river=river),
+                    "correct answer": country,
+                    "wrong answers": wrong_answers}
+
         return question

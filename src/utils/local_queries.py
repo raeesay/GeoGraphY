@@ -158,18 +158,23 @@ def get_continent_uri(rdf_countries, country_uri):
     query_continent = f"""
             PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
 
-            SELECT ?continent_uri
+            SELECT ?continent_uri ?continent_name
             WHERE {{
                 <{country_uri}> geographis:onContinent ?continent_uri .
+                ?continent_uri gn:name ?continent_name.
             }}
         """
 
     continent_uri = None
+    continent_name = None
 
     for row in rdf_countries.query(query_continent):
         continent_uri = row.continent_uri
+        continent_name = row.continent_name
 
-    return continent_uri
+    return continent_uri, continent_name
+
+
 
 def get_currency_uri(rdf_countries, country_uri):
     """
