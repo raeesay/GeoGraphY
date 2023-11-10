@@ -53,16 +53,19 @@ class Quiz:
         question_sampling = random.choices(questions[self.difficulty], k=int(self.nQuestions))
         quiz = [getattr(self.qGenerator, question) for question in question_sampling]
 
+        correct_count = 0
+        wrong_count = 0
         for question in quiz:
-            self.questionPrinting(question())
+            correct_count, wrong_count = self.questionPrinting(question(), correct_count, wrong_count)
             time.sleep(1)
 
-        #q6 = self.qGenerator.questionLeaderName()
-        #self.questionPrinting(q6)
+        print("You are done with the quiz.")
+        print(f"You had {correct_count} correct answers and {wrong_count} wrong answers,"
+              f" which means you answered {(correct_count / int(self.nQuestions)) * 100}% correctly.")
 
         return
 
-    def questionPrinting(self, question):
+    def questionPrinting(self, question, correct_answers, wrong_answers):
         print("")
         print("Question:", question["template"])
 
@@ -76,9 +79,12 @@ class Quiz:
         x = input("Please select your answer: ")
         if x == str(correct_index + 1):
             print("Correct!", question["return"] + "!")
+            correct_answers += 1
         else:
             print("Incorrect. Better luck next time!", question["return"] + ".")
+            wrong_answers += 1
 
+        return correct_answers, wrong_answers
 
 
     def getSettings(self):
