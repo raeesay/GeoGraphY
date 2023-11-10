@@ -251,7 +251,7 @@ def get_population(rdf_countries, country_uri):
     for pop_row in rdf_countries.query(query_pop):
         pop = pop_row.pop
 
-    return pop
+    return f'{int(pop):,}'
 
 
 def get_continent_name(rdf_continents, continent_uri):
