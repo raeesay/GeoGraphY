@@ -64,7 +64,6 @@ def wrong_answers_country_continent(rdf_countries, right_answer, continent_uri):
         ORDER BY RAND()
         LIMIT 3
     """
-
     wrong_answers = []
 
     for row in rdf_countries.query(query_country):
@@ -96,10 +95,21 @@ def wrong_answers_capital(rdf_countries, right_answer):
             LIMIT 3
         """
 
-    wrong_answers = []
+    try:
+        wrong_answers = []
 
-    for row in rdf_countries.query(query_capital):
-        wrong_answers.append(row.capital_uri)
+        for row in rdf_countries.query(query_capital):
+            wrong_answers.append(row.capital_uri)
+
+    except:
+        wrong_answers = []
+
+        for row in ["http://telegraphis.net/data/capitals/AR/Buenos_Aires#BuenosAires", "http://telegraphis.net/data/capitals/CA/Ottawa#Ottawa",
+                    "http://telegraphis.net/data/capitals/BE/Brussels#Brussels", "http://telegraphis.net/data/capitals/MA/Rabat#Rabat"]:
+            if row != right_answer:
+                wrong_answers.append(row)
+
+        wrong_answers = wrong_answers[0:3]
 
     return wrong_answers
 
