@@ -13,8 +13,6 @@ class Quiz:
     # keep track of correctly answered questions (and scores) (optional)
     # takes in settings from the user (such as difficulty or the amount of questions)
 
-    # TODO: take setting inputs as parameters to adjust the quiz
-
 
     def __init__(self):
         print("Welcome to GeoGraphY!")
@@ -60,23 +58,38 @@ class Quiz:
             time.sleep(1)
 
         print("You are done with the quiz.")
-        print(f"You had {correct_count} correct answers and {wrong_count} wrong answers,"
-              f" which means you answered {(correct_count / int(self.nQuestions)) * 100}% correctly.")
+        print(f"You had {correct_count} correct answers and {wrong_count} wrong answers."
+              f" Therefore you answered {(correct_count / int(self.nQuestions)) * 100}% correctly.")
 
         return
 
     def questionPrinting(self, question, correct_answers, wrong_answers):
-        print("")
-        print("Question:", question["template"])
 
         answers = question["wrong answers"]
         correct_index = random.randint(0,3)
         answers.insert(correct_index, question["correct answer"])
 
+        print("")
+        print("Question:", question["template"])
+
         for index, answer in enumerate(answers):
             print(f"{index + 1}. {answer}")
 
         x = input("Please select your answer: ")
+
+        #check if input is correct for answer selection
+        while x not in ["1", "2", "3", "4"]:
+            print("Wrong input for answer selection. Please try again and choose a number from 1 to 4!")
+            print("")
+            print("Question:", question["template"])
+
+            for index, answer in enumerate(answers):
+                print(f"{index + 1}. {answer}")
+
+            x = input("Please select your answer: ")
+
+
+
         if x == str(correct_index + 1):
             print("Correct!", question["return"] + "!")
             correct_answers += 1
