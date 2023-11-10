@@ -60,7 +60,7 @@ class Quiz:
         print("")
         print("You are done with the quiz.")
         print(f"You had {correct_count} correct answers and {wrong_count} wrong answers."
-              f" Therefore you answered {(correct_count / int(self.nQuestions)) * 100}% correctly.")
+              f" Therefore you answered {round((correct_count / int(self.nQuestions)) * 100, 2)}% correctly.")
 
         return
 
