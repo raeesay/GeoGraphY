@@ -137,10 +137,23 @@ def wrong_answers_currency(rdf_countries, right_answer):
             LIMIT 3
         """
 
-    wrong_answers = []
+    try:
+        wrong_answers = []
 
-    for row in rdf_countries.query(query_currency):
-        wrong_answers.append(row.currency_uri)
+        for row in rdf_countries.query(query_currency):
+            wrong_answers.append(row.currency_uri)
+
+    except:
+        wrong_answers = []
+
+        for row in ["http://telegraphis.net/data/currencies/MAD#MAD",
+                    "http://telegraphis.net/data/currencies/AUD#AUD",
+                    "http://telegraphis.net/data/currencies/EUR#EUR",
+                    "http://telegraphis.net/data/currencies/GMD#GMD"]:
+            if row != right_answer:
+                wrong_answers.append(row)
+
+        wrong_answers = wrong_answers[0:3]
 
     return wrong_answers
 
