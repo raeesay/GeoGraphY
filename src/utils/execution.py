@@ -74,10 +74,19 @@ class Quiz:
             print(f"{index + 1}. {answer}")
 
         x = input("Please select your answer: ")
+        # Correct answer
         if x == str(correct_index + 1):
             print("Correct!", question["return"] + "!")
-        else:
+        # Valid but incorrect answer
+        elif x in range(0,3):
             print("Incorrect. Better luck next time!", question["return"] + ".")
+        # Invalid answer, so given another chance
+        else:
+            x = input("Invalid input: please select an answer between 1 and 4:")
+            if x == str(correct_index + 1):
+                print("Correct!", question["return"] + "!")
+            else:
+                print("Incorrect. Better luck next time!", question["return"] + ".")
 
 
 
