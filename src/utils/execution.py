@@ -98,7 +98,10 @@ class Quiz:
             print("The quiz will have the difficulty 'Advanced'.")
 
         nQuestions = input("Please choose the number of questions you want to be asked. Please choose a number from 1 to 25: ")
-        if int(nQuestions) < 1 or int(nQuestions) > 25:
+        if not nQuestions.isdigit():
+            print("Invalid input for the number of questions. The quiz will default to 10 questions.")
+            nQuestions = 10
+        elif int(nQuestions) < 1 or int(nQuestions) > 25:
             print("Invalid input for the number of questions. The quiz will default to 10 questions.")
             nQuestions = 10
         else:
