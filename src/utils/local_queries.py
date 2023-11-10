@@ -158,21 +158,18 @@ def get_continent_uri(rdf_countries, country_uri):
     query_continent = f"""
             PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
 
-            SELECT ?continent_uri ?continent_name
+            SELECT ?continent_uri 
             WHERE {{
                 <{country_uri}> geographis:onContinent ?continent_uri .
-                ?continent_uri gn:name ?continent_name.
             }}
         """
 
     continent_uri = None
-    continent_name = None
 
     for row in rdf_countries.query(query_continent):
         continent_uri = row.continent_uri
-        continent_name = row.continent_name
 
-    return continent_uri, continent_name
+    return continent_uri
 
 
 
@@ -255,3 +252,23 @@ def get_population(rdf_countries, country_uri):
         pop = pop_row.pop
 
     return pop
+
+
+def get_continent_name(rdf_continents, continent_uri):
+    # Query for the continent's name using the continent uri
+    query_name = f"""
+            PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
+            PREFIX gn: <http://www.geonames.org/ontology#>
+
+            SELECT ?continent_name
+            WHERE {{
+                <{continent_uri}> gn:name ?continent_name.
+            }}
+        """
+
+    continent_name = None
+
+    for name_row in rdf_continents.query(query_name):
+        continent_name = name_row.continent_name
+
+    return continent_name
