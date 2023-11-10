@@ -183,19 +183,21 @@ class Question:
 
         local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
         continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
+        continent = continentHandling(continent_uri)
         pop = get_population(self.localData.rdf_countries, local_country_uri)
 
         while ((continent_uri == None) or (pop == None)):
             print("retrying to get the continent and population of a country!")
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
             continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
+            continent = continentHandling(continent_uri)
             pop = get_population(self.localData.rdf_countries, local_country_uri)
 
         #continent = get_continent_name(self.localData.rdf_continents, continent_uri)
         wrong_answers_uri = wrong_answers_country_continent(self.localData.rdf_countries, local_country_uri, continent_uri)
         wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
 
-        question = {"template": template.format(continent=continent_uri, pop=pop),
+        question = {"template": template.format(continent=continent, pop=pop),
                     "return": "{country} has a population of {pop}".format(country=country, pop=pop),
                     "correct answer": country,
                     "wrong answers": wrong_answers}
@@ -207,19 +209,21 @@ class Question:
 
         local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
         continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
+        continent = continentHandling(continent_uri)
         pop = get_population(self.localData.rdf_countries, local_country_uri)
 
         while ((continent_uri == None) or (pop == None)):
             print("retrying to get the continent and population of a country!")
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
             continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
+            continent = continentHandling(continent_uri)
             pop = get_population(self.localData.rdf_countries, local_country_uri)
 
         #continent = get_continent_name(self.localData.rdf_continents, continent_uri)
         wrong_answers_uri = wrong_answers_country(self.localData.rdf_countries, local_country_uri)
         wrong_answers = [get_country_name(country_uri, self.localData.rdf_countries) for country_uri in wrong_answers_uri]
 
-        question = {"template": template.format(continent=continent_uri, pop=pop),
+        question = {"template": template.format(continent=continent, pop=pop),
                     "return": "{country} has a population of {pop}".format(country=country, pop=pop),
                     "correct answer": country,
                     "wrong answers": wrong_answers}

@@ -254,21 +254,24 @@ def get_population(rdf_countries, country_uri):
     return pop
 
 
-def get_continent_name(rdf_continents, continent_uri):
-    # Query for the continent's name using the continent uri
-    query_name = f"""
-            PREFIX geographis: <http://telegraphis.net/ontology/geography/geography#>
-            PREFIX gn: <http://www.geonames.org/ontology#>
+def continentHandling(continent_uri):
+    continent_uri = str(continent_uri)
 
-            SELECT ?continent_name
-            WHERE {{
-                <{continent_uri}> gn:name ?continent_name.
-            }}
-        """
-
-    continent_name = None
-
-    for name_row in rdf_continents.query(query_name):
-        continent_name = name_row.continent_name
+    if "AF#AF" in continent_uri:
+        continent_name = "Africa"
+    elif "AS#AS" in continent_uri:
+        continent_name = "Asia"
+    elif "EU#EU" in continent_uri:
+        continent_name = "Europe"
+    elif "NA#NA" in continent_uri:
+        continent_name = "North America"
+    elif "SA#SA" in continent_uri:
+        continent_name = "South America"
+    elif "OC#OC" in continent_uri:
+        continent_name = "Oceania"
+    elif "AN#AN" in continent_uri:
+        continent_name = "Antarctica"
+    else:
+        continent_name = "Unknown"
 
     return continent_name
