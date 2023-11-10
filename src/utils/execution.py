@@ -57,6 +57,7 @@ class Quiz:
             correct_count, wrong_count = self.questionPrinting(question(), correct_count, wrong_count)
             time.sleep(1)
 
+        print("")
         print("You are done with the quiz.")
         print(f"You had {correct_count} correct answers and {wrong_count} wrong answers."
               f" Therefore you answered {(correct_count / int(self.nQuestions)) * 100}% correctly.")
