@@ -185,7 +185,7 @@ class Question:
         continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
         pop = get_population(self.localData.rdf_countries, local_country_uri)
 
-        while ((continent_uri == None) or (pop == None)):
+        while ((continent_uri == None) or ("AN#AN" in str(continent_uri)) or (pop == None)):
             print("retrying to get the continent and population of a country!")
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
             continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
@@ -209,7 +209,7 @@ class Question:
         continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
         pop = get_population(self.localData.rdf_countries, local_country_uri)
 
-        while ((continent_uri == None) or (pop == None)):
+        while ((continent_uri == None) or ("AN#AN" in str(continent_uri)) or (pop == None)):
             print("retrying to get the continent and population of a country!")
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
             continent_uri = get_continent_uri(self.localData.rdf_countries, local_country_uri)
