@@ -236,7 +236,7 @@ class Question:
         building = dbp_locationCountry(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
 
         while (not dbp_empty_return(building)):
-            print("retrying to get the leaders of a country!")
+            print("retrying to get a building of a country!")
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
             building = dbp_locationCountry(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
 
@@ -257,7 +257,7 @@ class Question:
         river = dbp_mouthLocation(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
 
         while (not dbp_empty_return(river)):
-            print("retrying to get the leaders of a country!")
+            print("retrying to get the river of a country!")
             local_country_uri, country = get_random_country_uri(self.localData.rdf_countries)
             river = dbp_mouthLocation(get_dbp_uri(self.localData.rdf_countries, local_country_uri))
 
